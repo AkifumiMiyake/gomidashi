@@ -1,0 +1,24 @@
+import './globals.css';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: '岡山市 ごみ収集 今日・明日チェッカー｜地区・町名で簡単確認',
+  description:
+    '岡山市の地区・町名を選ぶだけで、今日・明日のごみ収集区分をすぐ確認。可燃/不燃/資源/プラなど分別に対応。スマホ対応の収集日チェッカー。'
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="ja">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body>{children}</body>
+    </html>
+  );
+}
