@@ -5,6 +5,20 @@ import { createAdminSupabaseClient } from '../../../../lib/supabase/server';
 const BASE_URL =
   'https://f5d44204.viewer.kintoneapp.com/public/internal/api/records/bba750ccc0622ed0ea1ee9803b60537753367b11af275de1ad0d1507c414d779';
 
+type KviewerRow = {
+  city: string;
+  area: string;
+  town: string;
+  burnable_rule: string;
+  resource_rule: string;
+  landfill_rule: string;
+  extra_rule: string;
+  note: string;
+  source: string;
+  source_id: string;
+  updated_at: string;
+};
+
 export async function GET() {
   return NextResponse.json({ ok: true, route: '/api/admin/import-kviewer' });
 }
@@ -35,7 +49,7 @@ export async function POST(request: Request) {
       const records = data.records ?? [];
 
       const now = new Date().toISOString();
-      const rows = records.map((record: any) => ({
+      const rows: KviewerRow[] = records.map((record: any) => ({
         city: 'okayama',
         area: record['ドロップダウン_1']?.value ?? '',
         town: record['文字列__1行__0']?.value ?? '',
