@@ -1,5 +1,6 @@
 import './globals.css';
 import type { Metadata } from 'next';
+import Script from 'next/script';
 
 export const metadata: Metadata = {
   title: '岡山市 ごみ収集 今日・明日チェッカー｜地区・町名で簡単確認',
@@ -19,6 +20,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>{children}</body>
+      <Script src="https://www.googletagmanager.com/gtag/js?id=G-9QKZF8PNK0" strategy="afterInteractive" />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-9QKZF8PNK0');
+        `}
+      </Script>
     </html>
   );
 }
