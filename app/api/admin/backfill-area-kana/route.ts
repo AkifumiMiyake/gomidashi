@@ -50,20 +50,32 @@ export async function POST(request: Request) {
         continue;
       }
 
-      const { count, error: updateError } = await supabase
+      const { error: updateError } = await supabase
         .from('garbage_rules')
         .update({ area_kana: converted })
         .eq('city', 'okayama')
         .eq('source', 'kviewer')
         .eq('area', area)
-        .is('area_kana', null)
-        .select('id', { count: 'exact' });
+        .is('area_kana', null);
 
       if (updateError) {
         return NextResponse.json({ error: updateError.message }, { status: 500 });
       }
 
-      updatedRows += count ?? 0;
+      const { data: rows, error: selectError } = await supabase
+        .from('garbage_rules')
+        .select('id')
+        .eq('city', 'okayama')
+        .eq('source', 'kviewer')
+        .eq('area', area)
+        .is('area_kana', null);
+
+      if (selectError) {
+        return NextResponse.json({ error: selectError.message }, { status: 500 });
+      }
+
+      const count = rows?.length ?? 0;
+      updatedRows += count;
     }
 
     return NextResponse.json({
