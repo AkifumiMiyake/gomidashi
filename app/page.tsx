@@ -48,7 +48,7 @@ export default function Page() {
         </section>
         <footer className="page-footer">
           <a
-            href="https://x.com/TOjuNSceSy87633"
+            href="https://x.com/nostasyume"
             target="_blank"
             rel="noopener noreferrer"
             className="x-link"
@@ -57,7 +57,7 @@ export default function Page() {
             <img src="/x-logo.svg" alt="X" width="20" height="20" />
           </a>
           <a
-            href="https://x.com/TOjuNSceSy87633"
+            href="https://x.com/nostasyume"
             target="_blank"
             rel="noopener noreferrer"
             className="contact-link"
