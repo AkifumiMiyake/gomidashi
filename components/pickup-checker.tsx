@@ -345,7 +345,7 @@ export default function PickupChecker() {
           type="text"
           value={areaInput}
           onChange={(e) => setAreaInput(e.target.value)}
-          placeholder="例: 岡南 / おかなん"
+          placeholder="例: 岡南 / こうなん"
         />
         {areaLoading && <span className="notice">検索中...</span>}
         {areaError && <span className="error">{areaError}</span>}
