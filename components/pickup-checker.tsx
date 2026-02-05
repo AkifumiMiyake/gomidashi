@@ -332,7 +332,9 @@ export default function PickupChecker() {
                   setTownSearchOptions([]);
                 }}
                 >
-                  <span className="area-name">{option.area}</span>
+                  <span className="area-name">
+                    {option.town}（{option.area}）
+                  </span>
                 </button>
               ))}
           </div>
