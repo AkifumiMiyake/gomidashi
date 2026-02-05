@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 
@@ -37,12 +37,12 @@ function WeatherLine({ weather }: { weather: WeatherDay }) {
         <span className="temp">
           <span className="temp-label">最高</span>
           <span className="temp-num">{weather.tmax !== null ? weather.tmax : '-'}</span>
-          <span className="temp-unit">°</span>
+          <span className="temp-unit">℃</span>
         </span>
         <span className="temp">
           <span className="temp-label">最低</span>
           <span className="temp-num">{weather.tmin !== null ? weather.tmin : '-'}</span>
-          <span className="temp-unit">°</span>
+          <span className="temp-unit">℃</span>
         </span>
       </span>
     </div>
@@ -156,7 +156,7 @@ export default function PickupChecker() {
       try {
         const res = await fetch(`/api/areas?q=${encodeURIComponent(areaInput.trim())}`);
         if (!res.ok) {
-          throw new Error('エリアの取得に失敗しました。');
+          throw new Error('小学校区の検索に失敗しました。');
         }
         const data = await res.json();
         let options = data;
@@ -197,7 +197,7 @@ export default function PickupChecker() {
       try {
         const res = await fetch(`/api/towns?area=${encodeURIComponent(selectedArea)}`);
         if (!res.ok) {
-          throw new Error('町名の取得に失敗しました。');
+          throw new Error('町名一覧の取得に失敗しました。');
         }
         const data = await res.json();
         setTowns(data);
@@ -289,7 +289,7 @@ export default function PickupChecker() {
         setWeather(null);
       }
       if (!todayRes.ok || !tomorrowRes.ok) {
-        setPickupError('収集情報の取得に失敗しました。');
+        setPickupError('収集日情報の取得に失敗しました。');
         setHasResult(false);
         return;
       }
@@ -313,10 +313,10 @@ export default function PickupChecker() {
           onChange={(e) => setTownSearchQuery(e.target.value)}
           placeholder="町名の一部を入力"
         />
-        {townSearchLoading && <span className="notice">検索中...</span>}
+        {townSearchLoading && <span className="notice">読み込み中...</span>}
         {townSearchError && <span className="error">{townSearchError}</span>}
         {townSearchQuery.trim() && !townSearchLoading && townSearchOptions.length === 0 && (
-          <span className="notice">該当する町名がありません</span>
+          <span className="notice">該当する町名が見つかりません</span>
         )}
         {townSearchOptions.length > 1 && (
           <div className="suggestions">
@@ -331,17 +331,17 @@ export default function PickupChecker() {
                   setTown(option.town);
                   setTownSearchOptions([]);
                 }}
-                >
-                  <span className="area-name">
-                    {option.town}（{option.area}）
-                  </span>
-                </button>
-              ))}
+              >
+                <span className="area-name">
+                  {option.town}（{option.area}）
+                </span>
+              </button>
+            ))}
           </div>
         )}
       </div>
       <div className="field">
-        <label htmlFor="area">小学校区</label>
+        <label htmlFor="area">小学校区から探す</label>
         <input
           id="area"
           type="text"
@@ -349,10 +349,10 @@ export default function PickupChecker() {
           onChange={(e) => setAreaInput(e.target.value)}
           placeholder="例: 岡南 / こうなん"
         />
-        {areaLoading && <span className="notice">検索中...</span>}
+        {areaLoading && <span className="notice">読み込み中...</span>}
         {areaError && <span className="error">{areaError}</span>}
         {areaInput.trim().length >= 2 && !areaLoading && areaOptions.length === 0 && (
-          <span className="notice">該当するエリアがありません</span>
+          <span className="notice">該当する小学校区が見つかりません</span>
         )}
         {areaOptions.length > 0 && (
           <div className="suggestions">
@@ -426,7 +426,7 @@ export default function PickupChecker() {
         </button>
       )}
       <button type="button" onClick={handleCheck} disabled={!canSearch || loading}>
-        {loading ? '検索中...' : '今日・明日の収集日をチェック'}
+        {loading ? '読み込み中...' : '収集日をチェック'}
       </button>
       {pickupError && <p className="error">{pickupError}</p>}
 
@@ -454,11 +454,13 @@ export default function PickupChecker() {
                     </span>
                   ))
                 ) : (
-                  <span className="tag tag--none">収集なし</span>
+                  <span className="tag tag--none">該当なし</span>
                 )}
               </div>
             ) : (
-              <span className="notice">地区と町名を選択して確認してください。</span>
+              <span className="notice">
+                町名と小学校区を選択して検索してください
+              </span>
             )}
             {item.weather ? <WeatherLine weather={item.weather} /> : null}
           </div>
@@ -466,7 +468,7 @@ export default function PickupChecker() {
       </div>
       {hasResult && today?.rulesSummary && today.rulesSummary.length > 0 && (
         <div className="rules-card">
-          <h3 className="rules-title">この地区の収集ルール</h3>
+          <h3 className="rules-title">この小学校区の収集ルール</h3>
           <dl className="rules">
             {today.rulesSummary.map((rule) => (
               <div className="rules-row" key={rule.label}>
@@ -480,3 +482,4 @@ export default function PickupChecker() {
     </section>
   );
 }
+
